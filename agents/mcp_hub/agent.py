@@ -143,4 +143,4 @@ def create_mcp_hub_agent(
 
 
 # Pre-configured instance (tools added when env vars are set)
-mcp_hub_agent = create_mcp_hub_agent()
+mcp_hub_agent = create_mcp_hub_agent("gemini-2.5-pro")

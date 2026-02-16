@@ -13,8 +13,8 @@ Demonstrates:
 
 from typing import Optional, List
 
-from google.adk import App
-from google.adk.app import ResumabilityConfig, ContextCacheConfig
+from google.adk.apps import App
+from google.adk.apps import ResumabilityConfig, ContextCacheConfig
 from google.adk.agents import LlmAgent
 from google.adk.sessions import BaseSessionService
 from google.adk.artifacts import BaseArtifactService

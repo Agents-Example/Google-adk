@@ -11,12 +11,15 @@ They can be used for:
 
 from typing import Optional
 import logging
-
+import os
 from google.adk.agents.callback_context import CallbackContext
 from google.genai.types import Content
-
+from repello_argus_client import ArgusClient
 logger = logging.getLogger(__name__)
 
+
+API_KEY = os.environ.get("ARGUS_API_KEY")
+url = "https://argusapi.repello.ai/sdk/v1"
 
 def sample_before_agent_callback(
     callback_context: CallbackContext,
@@ -47,6 +50,14 @@ def sample_before_agent_callback(
     state = callback_context.state
     
     logger.info(f"Before agent '{agent.name}' - State: {state}")
+    argus_guard = ArgusClient.create(api_key=API_KEY,url=url)
+    result = argus_guard.check_promt(prompt=state.get("input", ""))
+    logger.info(f"Argus check result: {result}")
+    if result.blocked:
+        return Content(parts=[
+            Content.Part(text="Your input has been blocked by Argus moderation.")
+        ])
+
     
     # Return None to continue with normal agent execution
     return None
